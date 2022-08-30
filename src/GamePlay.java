@@ -118,6 +118,61 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            moves++;
+            right = true;
+            if(!left){
+                right = true;
+            }else{
+                right = false;
+                left = true;
+
+            }
+            up = false;
+            down = false;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            moves++;
+            left = true;
+            if(!right){
+                left = true;
+            }else{
+                left = false;
+                right = true;
+
+            }
+            up = false;
+            down = false;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_UP){
+            moves++;
+            up = true;
+            if(!down){
+                up = true;
+            }else{
+                up = false;
+                down = true;
+
+            }
+            left = false;
+            right = false;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_DOWN){
+            moves++;
+            down = true;
+            if(!up){
+                down = true;
+            }else{
+                down = false;
+                up = true;
+
+            }
+            left = false;
+            right = false;
+        }
     }
 
     @Override
@@ -127,6 +182,86 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        timer.restart();
+        if(right){
+            for (int n = lengthOfSnake - 1; n >= 0 ; n--){
+                snakeYlength[n + 1] = snakeYlength[n];
+            }
+            for(int n = lengthOfSnake; n >= 0; n--){
+                if(n == 0){
+//                    25 represents the pixels you'd like the snake to move
+                    snakeXlength[n] = snakeXlength[n]+25;
+                }else{
+                    snakeXlength[n] = snakeXlength[n - 1];
+                }
+//                if snake touches wall make the sake appear on the opposite border
+                if(snakeXlength[n] > 850){
+                    snakeXlength[n] = 25;
+                }
+            }
+            repaint();
+        }
+
+        if(left){
+            for (int n = lengthOfSnake - 1; n >= 0 ; n--){
+                snakeYlength[n + 1] = snakeYlength[n];
+            }
+            for(int n = lengthOfSnake; n >= 0; n--){
+                if(n == 0){
+//                    25 represents the pixels you'd like the snake to move
+                    snakeXlength[n] = snakeXlength[n]-25;
+                }else{
+                    snakeXlength[n] = snakeXlength[n - 1];
+                }
+//                if snake touches wall make the sake appear on the opposite border
+                if(snakeXlength[n] < 25){
+                    snakeXlength[n] = 850;
+                }
+            }
+            repaint();
+        }
+
+        if(up){
+            for (int n = lengthOfSnake - 1; n >= 0 ; n--){
+//                avoids changing the horizontal x-axis of snake since snake is moving vertically
+                snakeXlength[n + 1] = snakeXlength[n];
+            }
+            for(int n = lengthOfSnake; n >= 0; n--){
+                if(n == 0){
+//                    25 represents the pixels you'd like the snake to move
+                    snakeYlength[n] = snakeYlength[n]-25;
+                }else{
+                    snakeYlength[n] = snakeYlength[n - 1];
+                }
+//                if snake touches wall make the sake appear on the opposite border
+                if(snakeYlength[n] < 75){
+                    snakeYlength[n] = 625;
+                }
+            }
+            repaint();
+        }
+
+        if(down){
+            for (int n = lengthOfSnake - 1; n >= 0 ; n--){
+//                avoids changing the horizontal x-axis of snake since snake is moving vertically
+                snakeXlength[n + 1] = snakeXlength[n];
+            }
+            for(int n = lengthOfSnake; n >= 0; n--){
+                if(n == 0){
+//                    25 represents the pixels you'd like the snake to move
+                    snakeYlength[n] = snakeYlength[n]+25;
+                }else{
+                    snakeYlength[n] = snakeYlength[n - 1];
+                }
+//                if snake touches wall make the sake appear on the opposite border
+                if(snakeYlength[n] > 625){
+                    snakeYlength[n] = 75;
+                }
+            }
+            repaint();
+        }
+
 
     }
 }
