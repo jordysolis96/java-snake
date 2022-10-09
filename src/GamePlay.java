@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
@@ -34,6 +35,21 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private int moves = 0;
     private int score = 0;
+
+    //fruit parameters
+    private int[] fruitXpos = {25, 50, 75, 125, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400,
+    425, 450, 475, 500, 525, 550, 575, 600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850};
+
+    private int[] fruitYpos = {75, 125, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400,
+            425, 450, 475, 500, 525, 550, 575, 600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850};
+
+    private ImageIcon fruitImage;
+
+    private Random random = new Random();
+
+    private int xpos = random.nextInt(34);
+
+    private int ypos = random.nextInt(23);
 
     private ImageIcon titleImage;
 
@@ -104,6 +120,17 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                 tail = new ImageIcon("Snake_Pics/tail.png");
                 tail.paintIcon(this, graphics, snakeXlength[i], snakeYlength[i]);
             }
+
+            fruitImage = new ImageIcon("Snake_Pics/fruit.png");
+
+            if(fruitXpos[xpos] == snakeXlength[0] && fruitYpos[ypos] == snakeYlength[0]){
+                score = score + 5;
+                lengthOfSnake++;
+                xpos = random.nextInt(34);
+                ypos = random.nextInt(23);
+            }
+
+            fruitImage.paintIcon(this, graphics, fruitXpos[xpos], fruitXpos[ypos]);
         }
 
         graphics.dispose();
@@ -115,6 +142,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     }
 
+    //adds event listener
     @Override
     public void keyPressed(KeyEvent e) {
 
@@ -180,6 +208,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     }
 
+//    adds snake movement
     @Override
     public void actionPerformed(ActionEvent e) {
 
